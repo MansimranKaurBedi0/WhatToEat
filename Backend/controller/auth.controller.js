@@ -62,3 +62,34 @@ catch(err){
   console.log(err);
 }
 }
+
+//Update Profile Route
+export const updateProfile=async(req,res)=>{
+try{
+  const {dietPreference,allergies,location,age,gender,height,weight,activityLevel,goal}=req.body;
+  const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        age,
+        gender,
+        height,
+        weight,
+        activityLevel,
+        goal,
+        dietPreference,
+        allergies,
+        location
+      },
+      {
+        new: true
+      }
+    ).select("-password");
+
+    res.status(200).json(updatedUser);
+}
+catch(err){
+return res.status(500).json({
+      message: err.message
+    });
+}
+}
