@@ -1,4 +1,4 @@
-import User from "../models/userModel.js";
+import User from "../models/Users.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 //Login Route
