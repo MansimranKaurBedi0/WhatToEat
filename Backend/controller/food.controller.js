@@ -97,4 +97,32 @@ const getFoodLogs = async (req, res) => {
     }
 };
 
-export { addFoodLog, getFoodLogs };
+//Edit FoodLog
+const editFoodLog = async (req, res) => {
+    try {
+        const foodId = req.params.foodId;
+        const userId = req.user._id;
+        const foodLog = await FoodLog.findByIdAndUpdate(
+            {
+                _id: foodId,
+                userId: userId
+            },
+            req.body,
+            { new: true }
+        );
+
+        if (!foodLog) {
+            return res.status(404).json({ message: "Food log not found" });
+        }
+
+        return res.status(200).json({
+            message: "Food log updated successfully",
+            foodLog
+        });
+
+    }
+    catch (err) {
+        res.status(400).json({ message: "Error in editing" + err.message });
+    }
+}
+export { addFoodLog, getFoodLogs, editFoodLog };
