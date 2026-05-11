@@ -125,4 +125,34 @@ const editFoodLog = async (req, res) => {
         res.status(400).json({ message: "Error in editing" + err.message });
     }
 }
-export { addFoodLog, getFoodLogs, editFoodLog };
+
+
+//Delete FoodLog
+const deleteFoodLog = async (req, res) => {
+    try {
+        const foodId = req.params.foodId;
+        const userId = req.user._id;
+
+        const foodLog = await FoodLog.findOneAndDelete({
+            _id: foodId,
+            userId: userId
+        });
+
+        if (!foodLog) {
+            return res.status(404).json({ message: "Food log not found" });
+        }
+
+        return res.status(200).json({
+            message: "Food log deleted successfully",
+            foodLog
+        });
+    }
+    catch (err) {
+        console.log(error);
+
+        return res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+}
+export { addFoodLog, getFoodLogs, editFoodLog, deleteFoodLog };
