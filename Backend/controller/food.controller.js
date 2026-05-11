@@ -62,4 +62,39 @@ const addFoodLog = async (req, res) => {
     }
 };
 
-export { addFoodLog };
+
+// Get My Food Logs
+const getFoodLogs = async (req, res) => {
+    try {
+
+        const userId = req.user._id;
+
+        const foodLogs = await FoodLog.find({
+            userId
+        }).sort({ date: -1 });
+        if (foodLogs.length === 0) {
+            return res.status(200).json({
+                message: "No food logs found",
+                totalFoods: 0,
+                foodLogs: []
+            });
+        }
+
+        return res.status(200).json({
+            message: "Food logs fetched successfully",
+            totalFoods: foodLogs.length,
+            foodLogs
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+            message: "Internal server error"
+        });
+
+    }
+};
+
+export { addFoodLog, getFoodLogs };
