@@ -30,7 +30,7 @@ const addFoodLog = async (req, res) => {
             });
         }
 
-        const userId = req.user._id;
+        const userId = req.user.id;
 
         const foodLog = new FoodLog({
             userId,
@@ -67,7 +67,7 @@ const addFoodLog = async (req, res) => {
 const getFoodLogs = async (req, res) => {
     try {
 
-        const userId = req.user._id;
+        const userId = req.user.id;
 
         const foodLogs = await FoodLog.find({
             userId
@@ -101,7 +101,7 @@ const getFoodLogs = async (req, res) => {
 const editFoodLog = async (req, res) => {
     try {
         const foodId = req.params.foodId;
-        const userId = req.user._id;
+        const userId = req.user.id;
         const foodLog = await FoodLog.findByIdAndUpdate(
             {
                 _id: foodId,
@@ -131,7 +131,7 @@ const editFoodLog = async (req, res) => {
 const deleteFoodLog = async (req, res) => {
     try {
         const foodId = req.params.foodId;
-        const userId = req.user._id;
+        const userId = req.user.id;
 
         const foodLog = await FoodLog.findOneAndDelete({
             _id: foodId,
