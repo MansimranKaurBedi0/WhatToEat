@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const foodLogSchema = new mongoose.Schema(
     {
         userId: {
