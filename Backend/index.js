@@ -4,7 +4,7 @@ dotenv.config();
 import connectDb from './config/db.js';
 import foodRouter from './routes/food.js';
 import router from './routes/auth.js';
-
+import healthRouter from './routes/health.js';
 //Creating express server
 const app = express();
 app.use(express.json());
@@ -16,6 +16,9 @@ connectDb();
 app.use('/auth', router);
 //FoodLog routes(add, delete, edit, get);
 app.use('/food', foodRouter);
+
+//Health routes
+app.use('/userHealth', healthRouter);
 
 //Server working on 3000 port
 app.listen(3000, () => {
