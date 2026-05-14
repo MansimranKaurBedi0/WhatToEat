@@ -66,9 +66,7 @@ const addFoodLog = async (req, res) => {
 // Get My Food Logs
 const getFoodLogs = async (req, res) => {
     try {
-
         const userId = req.user.id;
-
         const foodLogs = await FoodLog.find({
             userId
         }).sort({ date: -1 });
@@ -148,7 +146,7 @@ const deleteFoodLog = async (req, res) => {
         });
     }
     catch (err) {
-        console.log(error);
+        console.log(err);
 
         return res.status(500).json({
             message: "Internal server error"
