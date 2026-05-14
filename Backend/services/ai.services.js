@@ -16,7 +16,14 @@ export const analyzeHealthWithAI =
         const prompt = `
 You are an expert nutrition coach.
 
-Analyze this user:
+You are a certified nutrition coach.
+
+Strictly analyze according to the user's goal.
+Do NOT assume goals.
+Use ONLY the provided goal.
+
+Return concise and practical advice.
+Return ONLY valid JSON.
 
 Gender: ${user.gender}
 Weight: ${user.weight}
