@@ -1,6 +1,5 @@
 import express from 'express';
-import dotenv from "dotenv";
-dotenv.config();
+import 'dotenv/config';
 import connectDb from './config/db.js';
 import foodRouter from './routes/food.js';
 import router from './routes/auth.js';
@@ -19,6 +18,7 @@ app.use('/food', foodRouter);
 
 //Health routes
 app.use('/userHealth', healthRouter);
+
 
 //Server working on 3000 port
 app.listen(3000, () => {

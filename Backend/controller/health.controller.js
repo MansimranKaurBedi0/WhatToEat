@@ -5,7 +5,9 @@ import {
     calculateHealthMetrics
 } from "../services/health.js";
 
-
+import {
+    analyzeHealthWithAI
+} from "../services/ai.services.js";
 export const getHealthAnalysis =
     async (req, res) => {
         try {
@@ -53,12 +55,31 @@ export const getHealthAnalysis =
                     foodLogs,
                     user
                 );
+            //AI analyse added
+            let aiInsights = null;
+            try {
 
+                aiInsights =
+                    await analyzeHealthWithAI(
+                        user,
+                        metrics
+                    );
+
+            }
+            catch (error) {
+
+                console.log(
+                    "FULL AI ERROR:",
+                    error
+                );
+
+            }
 
             // 5. Return response
             return res.status(200).json({
                 success: true,
-                data: metrics
+                metrics,
+                aiInsights
             });
 
         }

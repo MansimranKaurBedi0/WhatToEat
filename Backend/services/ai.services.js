@@ -1,23 +1,17 @@
 import {
-    GoogleGenerativeAI
-} from "@google/generative-ai";
+    GoogleGenAI
+} from "@google/genai";
 
 
-const genAI =
-    new GoogleGenerativeAI(
-        process.env.GEMINI_API_KEY
-    );
+const ai =
+    new GoogleGenAI({
+        apiKey:
+            process.env.GEMINI_API_KEY
+    });
 
 
 export const analyzeHealthWithAI =
     async (user, metrics) => {
-
-        const model =
-            genAI.getGenerativeModel({
-                model:
-                    "gemini-1.5-flash"
-            });
-
 
         const prompt = `
 You are an expert nutrition coach.
@@ -36,7 +30,7 @@ Junk Score: ${metrics.junkScore}
 Sugar Score: ${metrics.sugarScore}
 Consistency Score: ${metrics.consistencyScore}
 
-Return ONLY valid JSON in this format:
+Return ONLY valid JSON:
 
 {
   "status": "",
@@ -47,16 +41,33 @@ Return ONLY valid JSON in this format:
 `;
 
 
-        const result =
-            await model.generateContent(
-                prompt
-            );
-
         const response =
-            result.response.text();
+            await ai.models.generateContent({
+                model:
+                    "gemini-3-flash-preview",
+                contents:
+                    prompt
+            });
+
+
+        const rawResponse =
+            response.text;
+
+        console.log(
+            "Gemini Response:",
+            rawResponse
+        );
+
+
+        const cleanedResponse =
+            rawResponse
+                .replace(/```json/g, "")
+                .replace(/```/g, "")
+                .trim();
+
 
         return JSON.parse(
-            response
+            cleanedResponse
         );
 
     };
