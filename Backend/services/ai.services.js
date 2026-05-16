@@ -10,26 +10,35 @@ const ai =
     });
 
 
-export const analyzeHealthWithAI =
-    async (user, metrics) => {
+export const getRandomMealSuggestions =
+    async (
+        user,
+        metrics,
+        healthInsights
+    ) => {
 
         const prompt = `
-You are an expert nutrition coach.
-
 You are a certified nutrition coach.
 
-Strictly analyze according to the user's goal.
-Do NOT assume goals.
-Use ONLY the provided goal.
+Strictly recommend meals based ONLY on:
 
-Return concise and practical advice.
-Return ONLY valid JSON.
+1. User profile
+2. Health metrics
+3. Previous health analysis
+
+Do not assume anything.
+
+USER PROFILE:
 
 Gender: ${user.gender}
 Weight: ${user.weight}
 Goal: ${user.goal}
+Diet Preference: ${user.dietPreference}
+Allergies: ${user.allergies}
+Activity Level: ${user.activityLevel}
 
-Health metrics:
+
+HEALTH METRICS:
 
 Health Score: ${metrics.healthScore}
 Protein Score: ${metrics.proteinScore}
@@ -37,13 +46,37 @@ Junk Score: ${metrics.junkScore}
 Sugar Score: ${metrics.sugarScore}
 Consistency Score: ${metrics.consistencyScore}
 
+
+PREVIOUS HEALTH ANALYSIS:
+
+Status:
+${healthInsights.status}
+
+Strengths:
+${healthInsights.strengths.join(", ")}
+
+Risks:
+${healthInsights.risks.join(", ")}
+
+Suggestions:
+${healthInsights.suggestions.join(", ")}
+
+
+Now recommend:
+
+1. Breakfast
+2. Lunch
+3. Dinner
+4. Healthy Snack
+
 Return ONLY valid JSON:
 
 {
-  "status": "",
-  "strengths": [],
-  "risks": [],
-  "suggestions": []
+  "breakfast": "",
+  "lunch": "",
+  "dinner": "",
+  "snack": "",
+  "reason": ""
 }
 `;
 
@@ -60,8 +93,9 @@ Return ONLY valid JSON:
         const rawResponse =
             response.text;
 
+
         console.log(
-            "Gemini Response:",
+            "Meal Recommendation:",
             rawResponse
         );
 
