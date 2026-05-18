@@ -29,6 +29,8 @@ Strictly use:
 
 Do not assume extra ingredients.
 Use ONLY the provided ingredients.
+Recipe must be practical, realistic, and commonly cookable in a home kitchen.
+Salt, water, and basic spices are allowed as standard cooking essentials.
 
 USER PROFILE:
 
