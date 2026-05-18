@@ -11,44 +11,75 @@ const ai =
 
 
 export const getRandomMealSuggestions =
-    async (user, metrics) => {
+    async (
+        user,
+        metrics,
+        healthInsights
+    ) => {
 
         const prompt = `
-You are an expert nutrition coach.
+You are a certified nutrition coach.
 
-Recommend meals based ONLY on this user profile.
+Strictly recommend meals based ONLY on:
 
-User Profile:
+1. User profile
+2. Health metrics
+3. Previous health analysis
+
+Do not assume anything.
+
+USER PROFILE:
 
 Gender: ${user.gender}
 Weight: ${user.weight}
 Goal: ${user.goal}
 Diet Preference: ${user.dietPreference}
 Allergies: ${user.allergies}
+Activity Level: ${user.activityLevel}
 
-Health Metrics:
+
+HEALTH METRICS:
 
 Health Score: ${metrics.healthScore}
 Protein Score: ${metrics.proteinScore}
-Sugar Score: ${metrics.sugarScore}
 Junk Score: ${metrics.junkScore}
+Sugar Score: ${metrics.sugarScore}
+Consistency Score: ${metrics.consistencyScore}
 
-Suggest:
+
+PREVIOUS HEALTH ANALYSIS:
+
+Status:
+${healthInsights.status}
+
+Strengths:
+${healthInsights.strengths.join(", ")}
+
+Risks:
+${healthInsights.risks.join(", ")}
+
+Suggestions:
+${healthInsights.suggestions.join(", ")}
+
+
+Now recommend:
 
 1. Breakfast
 2. Lunch
 3. Dinner
 4. Healthy Snack
 
-Return ONLY JSON:
+Return ONLY valid JSON:
 
 {
   "breakfast": "",
   "lunch": "",
   "dinner": "",
-  "snack": ""
+  "snack": "",
+  "reason": ""
 }
 `;
+
 
         const response =
             await ai.models.generateContent({
@@ -58,8 +89,26 @@ Return ONLY JSON:
                     prompt
             });
 
+
+        const rawResponse =
+            response.text;
+
+
+        console.log(
+            "Meal Recommendation:",
+            rawResponse
+        );
+
+
+        const cleanedResponse =
+            rawResponse
+                .replace(/```json/g, "")
+                .replace(/```/g, "")
+                .trim();
+
+
         return JSON.parse(
-            response.text
+            cleanedResponse
         );
 
     };
