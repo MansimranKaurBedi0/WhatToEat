@@ -1,7 +1,8 @@
 import express from "express";
 
 import {
-    recommendMeals
+    recommendMeals,
+    generateRecipe
 } from "../controller/meal.controller.js";
 
 import { authMiddleware } from "../middleware/auth.middleware.js";
@@ -17,5 +18,10 @@ router.get(
     recommendMeals
 );
 
+router.post(
+    "/recipe",
+    authMiddleware,
+    generateRecipe
+);
 
 export default router;
