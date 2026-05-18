@@ -33,25 +33,18 @@ function Signup() {
                         }
                     );
 
-                // save token
                 localStorage.setItem(
                     "token",
                     res.data.token
                 );
 
                 setMessage(
-                    "Signup successful ✅"
-                );
-
-                console.log(
-                    res.data
+                    "Signup successful"
                 );
 
             }
 
             catch (error) {
-
-                console.log(error);
 
                 setMessage(
                     error.response?.data?.message ||
@@ -113,7 +106,6 @@ function Signup() {
                     border
                     p-3
                     rounded-lg
-                    outline-none
                     "
                 />
 
@@ -131,7 +123,6 @@ function Signup() {
                     border
                     p-3
                     rounded-lg
-                    outline-none
                     "
                 />
 
@@ -149,7 +140,6 @@ function Signup() {
                     border
                     p-3
                     rounded-lg
-                    outline-none
                     "
                 />
 
@@ -161,33 +151,26 @@ function Signup() {
                     text-white
                     p-3
                     rounded-lg
-                    hover:opacity-90
                     "
                 >
                     Signup
                 </button>
 
 
-                {
-                    message && (
-
-                        <p
-                            className="
-                            text-center
-                            text-sm
-                            "
-                        >
-                            {message}
-                        </p>
-
-                    )
-                }
+                <p
+                    className="
+                    text-center
+                    "
+                >
+                    {message}
+                </p>
 
             </form>
 
         </div>
 
     );
+
 }
 
 export default Signup;
