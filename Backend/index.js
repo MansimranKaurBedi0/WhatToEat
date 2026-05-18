@@ -4,6 +4,7 @@ import connectDb from './config/db.js';
 import foodRouter from './routes/food.js';
 import router from './routes/auth.js';
 import healthRouter from './routes/health.js';
+import mealRouter from './routes/meal.js';
 //Creating express server
 const app = express();
 app.use(express.json());
@@ -19,6 +20,8 @@ app.use('/food', foodRouter);
 //Health routes
 app.use('/userHealth', healthRouter);
 
+//Meal Route
+app.use('/meals', mealRouter);
 
 //Server working on 3000 port
 app.listen(3000, () => {

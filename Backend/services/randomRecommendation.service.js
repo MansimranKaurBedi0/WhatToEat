@@ -98,6 +98,9 @@ Return ONLY valid JSON:
             "Meal Recommendation:",
             rawResponse
         );
+        console.log("USER:", user);
+        console.log("METRICS:", metrics);
+        console.log("HEALTH INSIGHTS:", healthInsights);
 
 
         const cleanedResponse =
