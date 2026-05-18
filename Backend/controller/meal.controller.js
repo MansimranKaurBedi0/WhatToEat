@@ -13,7 +13,10 @@ import {
     getRandomMealSuggestions
 } from "../services/randomRecommendation.service.js";
 
-
+import {
+    getRecipeFromIngredients
+} from "../services/Recipe.service.js";
+//Food Recommendation Controller
 export const recommendMeals =
     async (req, res) => {
 
@@ -107,6 +110,110 @@ export const recommendMeals =
                     error.message,
                 fullError:
                     error.toString()
+            });
+
+        }
+
+    };
+
+//Recipe 
+export const generateRecipe =
+    async (req, res) => {
+
+        try {
+
+            const userId =
+                req.user.id;
+
+            const {
+                ingredients
+            } = req.body;
+
+
+            if (
+                !ingredients ||
+                !Array.isArray(
+                    ingredients
+                ) ||
+                ingredients.length === 0
+            ) {
+
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Ingredients are required"
+                });
+
+            }
+
+
+            // user fetch
+            const user =
+                await User.findById(
+                    userId
+                );
+
+            if (!user) {
+
+                return res.status(404).json({
+                    message:
+                        "User not found"
+                });
+
+            }
+
+
+            // food logs fetch
+            const foodLogs =
+                await FoodLog.find({
+                    userId
+                });
+
+
+            // metrics
+            const metrics =
+                calculateHealthMetrics(
+                    foodLogs,
+                    user
+                );
+
+
+            // AI health insights
+            const healthInsights =
+                await analyzeHealthWithAI(
+                    user,
+                    metrics
+                );
+
+
+            // AI recipe
+            const recipe =
+                await getRecipeFromIngredients(
+                    user,
+                    metrics,
+                    healthInsights,
+                    ingredients
+                );
+
+
+            return res.status(200).json({
+                success: true,
+                recipe
+            });
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Recipe Error:",
+                error
+            );
+
+            return res.status(500).json({
+                success: false,
+                message:
+                    error.message
             });
 
         }
