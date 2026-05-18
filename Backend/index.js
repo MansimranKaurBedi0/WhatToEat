@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from "cors";
 import 'dotenv/config';
 import connectDb from './config/db.js';
 import foodRouter from './routes/food.js';
@@ -8,7 +9,13 @@ import mealRouter from './routes/meal.js';
 //Creating express server
 const app = express();
 app.use(express.json());
-
+app.use(
+  cors({
+    origin:
+      "http://localhost:5173",
+    credentials: true
+  })
+);
 //connect to Db function
 connectDb();
 
