@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
 import API from "../api/api";
-
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 function Profile() {
   const [formData, setFormData] = useState({
     age: "",
@@ -14,6 +15,7 @@ function Profile() {
     allergies: "",
     location: "",
   });
+  const { user, setUser } = useContext(UserContext);
 
   const [message, setMessage] = useState("");
 
@@ -23,6 +25,7 @@ function Profile() {
       const res = await API.get("/auth/profile");
 
       setFormData(res.data);
+      setUser(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -51,6 +54,7 @@ function Profile() {
       console.log(res.data);
 
       setMessage("Profile Updated ✅");
+      setUser(formData);
     } catch (error) {
       console.log(error);
 
