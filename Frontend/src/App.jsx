@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 
 import { AuthContext } from "./context/AuthContext";
 import Profile from "./pages/Profile";
+import FoodLog from "./pages/Food";
 
 function App() {
   const { isLogin, logout } = useContext(AuthContext);
@@ -31,6 +32,7 @@ function App() {
     <div>
       <h1>Welcome To WhatToEat 🚀</h1>
       <Profile></Profile>
+      <FoodLog></FoodLog>
       <button onClick={logout}>Logout</button>
     </div>
   );
