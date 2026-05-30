@@ -9,6 +9,7 @@ import { AuthContext } from "./context/AuthContext";
 import Profile from "./pages/Profile";
 import FoodLog from "./pages/Food";
 import RecipeGenerator from "./pages/RecipeGenerator";
+import HealthAnalysis from "./pages/HealthAnalysis";
 
 function App() {
   const { isLogin, logout } = useContext(AuthContext);
@@ -35,6 +36,7 @@ function App() {
       <Profile></Profile>
       <FoodLog></FoodLog>
       <RecipeGenerator></RecipeGenerator>
+      {/* <HealthAnalysis></HealthAnalysis> */}
       <button onClick={logout}>Logout</button>
     </div>
   );
