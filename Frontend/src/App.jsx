@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Carousel from "./components/Carousel";
+import StoryFlow from "./components/StoryFlow";
+import AiSuggestion from "./pages/AiSuggestion";
 
 import { AuthContext } from "./context/AuthContext";
 import styles from "./pages/Auth.module.css";
@@ -271,9 +273,26 @@ function App() {
       <main>
         {view === "profile" ? (
           <Profile onBack={() => setView("dashboard")} />
+        ) : view === "ai-suggestion" ? (
+          <AiSuggestion onBack={() => setView("dashboard")} />
         ) : (
           <div>
             <Carousel />
+            <StoryFlow />
+            
+            {/* AI Suggestion CTA Banner */}
+            <div className="ai-suggestion-banner-container">
+              <div className="ai-suggestion-banner-left">
+                <h3>Not able to think what to eat?</h3>
+                <p>Get personalized AI suggestions based on your previous meals and health metrics.</p>
+              </div>
+              <div className="ai-suggestion-banner-right">
+                <button onClick={() => setView("ai-suggestion")} className="ai-suggestion-banner-btn">
+                  Get AI Suggestion ✨
+                </button>
+              </div>
+            </div>
+
             <div style={{ textAlign: "center", padding: "60px 20px" }}>
               <h1 style={{ fontSize: "3rem", marginBottom: "16px", fontWeight: "800", background: "linear-gradient(135deg, #ffffff 60%, #10b981 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 Welcome To WhatToEat 🚀
@@ -282,6 +301,74 @@ function App() {
                 Discover and track healthy food choices with AI.
               </p>
             </div>
+
+            <style>{`
+              .ai-suggestion-banner-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: rgba(12, 19, 15, 0.45);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                border-radius: 20px;
+                padding: 40px 60px;
+                margin: 60px 8% 20px 8%;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+                position: relative;
+                overflow: hidden;
+                z-index: 5;
+              }
+              .ai-suggestion-banner-left {
+                max-width: 65%;
+              }
+              .ai-suggestion-banner-left h3 {
+                font-family: 'Fraunces', serif;
+                font-size: 1.8rem;
+                font-weight: 700;
+                color: #ffffff;
+                margin-bottom: 8px;
+              }
+              .ai-suggestion-banner-left p {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 0.95rem;
+                color: #a0b299;
+                line-height: 1.5;
+              }
+              .ai-suggestion-banner-btn {
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                border: none;
+                color: #ffffff;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 0.95rem;
+                font-weight: 700;
+                padding: 14px 28px;
+                border-radius: 10px;
+                cursor: pointer;
+                box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+                transition: all 0.3s ease;
+                white-space: nowrap;
+              }
+              .ai-suggestion-banner-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+              }
+              @media (max-width: 768px) {
+                .ai-suggestion-banner-container {
+                  flex-direction: column;
+                  text-align: center;
+                  gap: 20px;
+                  padding: 30px;
+                  margin: 40px 4% 10px 4%;
+                }
+                .ai-suggestion-banner-left {
+                  max-width: 100%;
+                }
+                .ai-suggestion-banner-left h3 {
+                  font-size: 1.5rem;
+                }
+              }
+            `}</style>
           </div>
         )}
       </main>
