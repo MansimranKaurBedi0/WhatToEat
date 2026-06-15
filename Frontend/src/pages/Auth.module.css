@@ -441,3 +441,32 @@
     font-size: 2.2rem;
   }
 }
+
+.profile-wrapper {
+  max-width: 680px !important;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+  .profile-wrapper {
+    max-width: 100% !important;
+  }
+  .profile-grid .input-group:last-child {
+    grid-column: span 1 !important;
+  }
+}
+
+.profile-bg-image {
+  background-image: url('../assets/profile_bg.png') !important;
+}
+
+

@@ -4,6 +4,8 @@ import { useContext, useState, useRef } from "react";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
+import Carousel from "./components/Carousel";
 
 import { AuthContext } from "./context/AuthContext";
 import styles from "./pages/Auth.module.css";
@@ -11,6 +13,7 @@ import styles from "./pages/Auth.module.css";
 function App() {
   const { isLogin, logout } = useContext(AuthContext);
   const [isLoginView, setIsLoginView] = useState(true);
+  const [view, setView] = useState("dashboard");
   const containerRef = useRef(null);
   const cardRef = useRef(null);
 
@@ -189,25 +192,99 @@ function App() {
 
   // if user logged in
   return (
-    <div style={{ padding: "40px", textAlign: "center", backgroundColor: "#060907", minHeight: "100vh", color: "#fff" }}>
-      <h1 style={{ fontSize: "2.5rem", marginBottom: "10px" }}>Welcome To WhatToEat 🚀</h1>
-      <p style={{ color: "#a0b299", marginBottom: "20px" }}>Discover and track healthy food choices with AI.</p>
-      <button 
-        onClick={logout}
-        style={{
-          background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-          color: "#fff",
-          border: "none",
-          padding: "12px 24px",
-          borderRadius: "8px",
-          fontSize: "1rem",
-          fontWeight: "600",
-          cursor: "pointer",
-          boxShadow: "0 4px 12px rgba(16, 185, 129, 0.2)"
-        }}
-      >
-        Logout
-      </button>
+    <div style={{ backgroundColor: "#060907", minHeight: "100vh", color: "#fff" }}>
+      {/* Top Header Navigation */}
+      <header style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "16px 40px",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+        background: "rgba(12, 19, 15, 0.65)",
+        backdropFilter: "blur(10px)",
+        position: "sticky",
+        top: 0,
+        zIndex: 100
+      }}>
+        <div 
+          style={{ fontWeight: "800", fontSize: "1.5rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}
+          onClick={() => setView("dashboard")}
+        >
+          WhatToEat 🍽️
+        </div>
+        <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+          {view === "profile" ? (
+            <button 
+              onClick={() => setView("dashboard")}
+              style={{
+                background: "transparent",
+                color: "#10b981",
+                border: "1px solid rgba(16, 185, 129, 0.3)",
+                padding: "8px 16px",
+                borderRadius: "8px",
+                fontSize: "0.9rem",
+                fontWeight: "600",
+                cursor: "pointer",
+                transition: "all 0.3s ease"
+              }}
+            >
+              Dashboard
+            </button>
+          ) : (
+            <button 
+              onClick={() => setView("profile")}
+              style={{
+                background: "transparent",
+                color: "#10b981",
+                border: "1px solid rgba(16, 185, 129, 0.3)",
+                padding: "8px 16px",
+                borderRadius: "8px",
+                fontSize: "0.9rem",
+                fontWeight: "600",
+                cursor: "pointer",
+                transition: "all 0.3s ease"
+              }}
+            >
+              Edit Profile
+            </button>
+          )}
+          <button 
+            onClick={logout}
+            style={{
+              background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+              color: "#fff",
+              border: "none",
+              padding: "8px 16px",
+              borderRadius: "8px",
+              fontSize: "0.9rem",
+              fontWeight: "600",
+              cursor: "pointer",
+              boxShadow: "0 4px 12px rgba(16, 185, 129, 0.2)"
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <main>
+        {view === "profile" ? (
+          <Profile onBack={() => setView("dashboard")} />
+        ) : (
+          <div>
+            <Carousel />
+            <div style={{ textAlign: "center", padding: "60px 20px" }}>
+              <h1 style={{ fontSize: "3rem", marginBottom: "16px", fontWeight: "800", background: "linear-gradient(135deg, #ffffff 60%, #10b981 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                Welcome To WhatToEat 🚀
+              </h1>
+              <p style={{ color: "#a0b299", marginBottom: "10px", fontSize: "1.2rem", maxWidth: "600px", margin: "0 auto" }}>
+                Discover and track healthy food choices with AI.
+              </p>
+            </div>
+          </div>
+        )}
+      </main>
     </div>
   );
 }
